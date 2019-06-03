@@ -29,4 +29,8 @@ urlpatterns = [
     path('boards/<int:pk>/results/', views.ResultsView.as_view(), name='results'),
     # ex: /boards/5/vote/
     path('boards/<int:question_id>/vote/', views.vote, name='vote'),
+    path('pqr/', views.IndexPQR, name='pqr'),
+    path('pqr/addPQR/', views.newPQR, name='newPQR'),
+    path('pqr/search/', views.search, name='search'),
+    path('pqr/add/', views.add, name='add'),
 ]

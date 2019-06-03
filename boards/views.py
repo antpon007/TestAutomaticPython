@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 # Create your views here.
 
-from .models import Question, Choice
+from .models import Question, Choice, PQR, Answer
 
 
 class IndexView(generic.ListView):
@@ -29,6 +29,7 @@ def home(request):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'boards/detail.html'
+
     def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
@@ -44,7 +45,8 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question.choice_set.get(
+            pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'boards/detail.html', {
@@ -58,3 +60,21 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('results', args=(question.id,)))
+
+
+def IndexPQR(request):
+    return render(request, 'pqr/index.html')
+
+
+def newPQR(request):
+    return render(request, 'pqr/addPQR.html')
+
+
+def search(request):
+    return render(request, 'pqr/search.html')
+
+
+def add(request):
+    return render(request, 'pqr/addPQR.html', {
+        'message': "PQR successfully saved",
+    })
