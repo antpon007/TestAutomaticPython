@@ -3,11 +3,11 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 {% if message %}<p style="color:lightgreen"><strong>{{ message }}</strong></p>{% endif %}
-<div class="container">
-  <div class="row">
-    <div class="col-sm-8">
+<div class="container opacity ">
+  <div class="row ">
+    <div class="col-sm-12 height82">
       <h3>Create new PQR</h3>
-      <form action="{% url 'add' %}" method="POST"> {% csrf_token %}
+      <form action="{% url 'add' %}" method="POST" class="col-sm-8"> {% csrf_token %}
         <fieldset>
           <div class="form-group">
             <label for="name">Name: </label>
@@ -26,6 +26,7 @@
       </form>
     </div>
   </div>
+
 
 </div>
 
