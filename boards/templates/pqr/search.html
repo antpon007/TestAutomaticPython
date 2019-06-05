@@ -1,4 +1,24 @@
 {%include 'pqr/index.html'%}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h3>Search your PQR</h3>
+      <form action="#" method="GET">
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="ID" id="txtSearch" required />
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                  <span class="glyphicon glyphicon-search" style="height: 20px;"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-<h2>Search</h2>
-<input type="search" name="search" id="search" placeholder="insert PQR-ID" style="width: 200px;">
+{%include 'pqr/footer.html'%}
