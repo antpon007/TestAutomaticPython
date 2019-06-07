@@ -32,5 +32,7 @@ urlpatterns = [
     path('pqr/', views.IndexPQR, name='pqr'),
     path('pqr/addPQR/', views.newPQR, name='newPQR'),
     path('pqr/search/', views.search, name='search'),
+    path('pqr/searchPQR/', views.searchPQR, name='searchPQR'),
     path('pqr/add/', views.add, name='add'),
+    #path('pqr/addAnswer/', views.addAnswer, name='addAnswer'),
 ]

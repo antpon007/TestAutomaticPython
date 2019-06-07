@@ -1,7 +1,6 @@
 import datetime
 from django.db import models
 from django.utils import timezone
-from phone_field import PhoneField
 # Create your models here.
 
 
@@ -29,11 +28,14 @@ class Choice(models.Model):
 class PQR(models.Model):
     uuid = models.CharField(max_length=36)
     name = models.CharField(max_length=100)
-    cellphone = PhoneField(blank=True, help_text='Contact phone number')
+    cellphone = models.CharField(max_length=30)
     pqr_text = models.CharField(max_length=2000)
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):
+        return self.pqr_text
+
+    def comment(self):
         return self.pqr_text
 
 

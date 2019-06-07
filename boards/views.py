@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+import uuid
 # Create your views here.
 
 from .models import Question, Choice, PQR, Answer
@@ -71,10 +72,42 @@ def newPQR(request):
 
 
 def search(request):
-    return render(request, 'pqr/search.html')
+    return render(request, 'pqr/search.html',)
+
+
+def searchPQR(request):
+    try:
+        pqr = get_object_or_404(PQR, uuid=request.POST['pqr_uuid'])
+    except:
+        return render(request, 'pqr/search.html', {
+            'error_message': "Error invalid PQR. " + request.POST['pqr_uuid'],
+        })
+    else:
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return render(request, 'pqr/search.html', {'data': {'name': pqr.name,
+                                                            'uuid': pqr.uuid,
+                                                            'date_pub': pqr.pub_date,
+                                                            'comment': pqr.pqr_text, }})
 
 
 def add(request):
-    return render(request, 'pqr/addPQR.html', {
-        'message': "PQR successfully saved",
-    })
+    try:
+        q = PQR(uuid=str(uuid.uuid4().hex),
+                name=str(request.POST['name']),
+                cellphone=str(request.POST['cellphone']),
+                pqr_text=str(request.POST['comment']),
+                pub_date=timezone.now())
+        q.save()
+    except:
+        return render(request, 'pqr/addPQR.html', {
+            'error_message': "Error save PQR.",
+        })
+    else:
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return render(request, 'pqr/addPQR.html', {'id': q.id,
+                                                   'uuid': q.uuid,
+                                                   'message': "PQR successfully saved - N° PQR:" + q.uuid, })
