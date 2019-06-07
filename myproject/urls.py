@@ -34,5 +34,5 @@ urlpatterns = [
     path('pqr/search/', views.search, name='search'),
     path('pqr/searchPQR/', views.searchPQR, name='searchPQR'),
     path('pqr/add/', views.add, name='add'),
-    #path('pqr/addAnswer/', views.addAnswer, name='addAnswer'),
+    path('pqr/<int:pqr_id>/addAnswer/', views.addAnswer, name='addAnswer'),
 ]

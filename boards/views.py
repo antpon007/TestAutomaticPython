@@ -86,10 +86,7 @@ def searchPQR(request):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return render(request, 'pqr/search.html', {'data': {'name': pqr.name,
-                                                            'uuid': pqr.uuid,
-                                                            'date_pub': pqr.pub_date,
-                                                            'comment': pqr.pqr_text, }})
+        return render(request, 'pqr/search.html', {'pqr': pqr})
 
 
 def add(request):
@@ -111,3 +108,20 @@ def add(request):
         return render(request, 'pqr/addPQR.html', {'id': q.id,
                                                    'uuid': q.uuid,
                                                    'message': "PQR successfully saved - N° PQR:" + q.uuid, })
+
+
+def addAnswer(request, pqr_id):
+    try:
+        pqr = get_object_or_404(PQR, pk=pqr_id)
+        pqr.answer_set.create(answer_text=str(request.POST['comment']),
+                              answer_date=timezone.now())
+    except:
+        return render(request, 'pqr/search.html', {
+            'error_message': "Error save answer.",
+        })
+    else:
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return render(request, 'pqr/search.html', {'pqr': pqr,
+                                                   'message': "answer successfully saved ", })
