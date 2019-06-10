@@ -1,62 +1,83 @@
-{%include 'pqr/index.html'%}
-<div class="container opacity height82">
-
-  <div class="row">
-    <div>
-      <h3>Search your PQR</h3>
+{%include 'pqr/header.html'%}
+<div class="container">
+  {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">PQR CODE was not finded </h4>
+      <p>{{ error_message }}</p>
+    </div>
+  {% endif %} 
+  <div class="card border-dark">
+    <div class="card-header text-white bg-primary">
+      <h3>Check your PQR status</h3>
+    </div>
+    <div class="card-body bg-light">
       <form action="{% url 'searchPQR' %}" method="POST">
         {% csrf_token %}
-        <div class="row">
-          <div class="col-xs-8 col-md-8">
-            <div class="input-group">
-              <input type="text" class="form-control" style="margin-left: 20px;" placeholder="ID" name="pqr_uuid"
+        <div class="form-row">
+          <div class="col-md-1">
+            <div class="form-group text-center">
+              <label class="col-form-label">PQR ID</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="ID" name="pqr_uuid"
                 id="pqr_uuid" required />
-              <div class="input-group-btn">
-                <button class="btn btn-primary" type="submit">
-                  <span class="glyphicon glyphicon-search" style="height: 20px;"></span>
-                </button>
-              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group">
+              <input type="submit" value="Search" class="btn btn-primary" />
             </div>
           </div>
         </div>
       </form>
-      <div class="col-md-12 opacity">
-        {% if pqr %}
-        <p style="color:green; background: white">
-          <strong>PQR found: {{ pqr.uuid }} </strong>
-        </p>
-        <div class="col-sm-12 ">
-          <form action="{% url 'addAnswer' pqr.id %}" method="POST" class="col-sm-12">
-            {% csrf_token %}
-            <fieldset>
-              <div class="col-sm-12">
-                <p>Name: {{ pqr.name }}, date pub: {{ pqr.pub_date }}</p>
-                <h4><i>{{ pqr.comment }}</i></h4>
-                <hr>
-              </div>
-              <div class="col-sm-12 ">
-                <h4>Answer:</h4>
-                <hr>
-                {% for answer in pqr.answer_set.all %}
-                {{ answer.answer_date }}
-                <textarea class="form-control" rows="4" readonly>
-                  {{ answer.answer_text }}
-                </textarea>
-                {% endfor %}
-                <hr>
-              </div>
-              <div class="form-group">
-                <label for="comment">Comment:</label>
-                <textarea class="form-control" rows="5" name="comment" id="comment" required></textarea>
-              </div>
-              <input type="submit" value="add" class="btn btn-primary btn-md" style="width: 100px;" />
-            </fieldset>
-          </form>
+    </div>
+  </div>
+  {% if pqr %}
+  <div class="card border-dark mt-4 mb-4">
+    <div class="card-header text-white bg-success">
+      <h3>PQR found: {{ pqr.uuid }} </h3>
+    </div>
+    <div class="card-body bg-light">
+      <div class="col-sm-12 ">
+        <div class="col-sm-12 text-right">
+          <p><b>Posted by:</b> {{ pqr.name }}<br><b>Posted on:</b> {{ pqr.pub_date }}</p>
         </div>
-        {% endif %}
+        <div class="col-sm-12">
+          <p><b>Question:</b></p>
+          <h4><i>{{ pqr.comment }}??</i></h4>
+          <hr>
+        </div>
+        <form action="{% url 'addAnswer' pqr.id %}" method="POST" class="col-sm-12">
+          {% csrf_token %}
+          <fieldset>
+            <div class="col-sm-12 ">
+              <h4>Answers:</h4>
+              <hr>
+              
+              {% for answer in pqr.answer_set.all %}
+              <div class="col-sm-12 text-right">
+                <b>Answered on:</b>{{ answer.answer_date }}
+              </div>
+                <div class="col-sm-12 text-justify">
+                  {{ answer.answer_text }}
+                </div>
+                <hr>
+              {% endfor %}
+              
+            </div>
+            <div class="form-group">
+              <label for="comment">Comment:</label>
+              <textarea class="form-control" rows="5" name="comment" id="comment" required></textarea>
+            </div>
+            <input type="submit" value="add" class="btn btn-primary btn-md" style="width: 100px;" />
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>
+  {% endif %}
 </div>
 
 {%include 'pqr/footer.html'%}

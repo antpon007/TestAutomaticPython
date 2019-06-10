@@ -107,7 +107,7 @@ def add(request):
         # user hits the Back button.
         return render(request, 'pqr/addPQR.html', {'id': q.id,
                                                    'uuid': q.uuid,
-                                                   'message': "PQR successfully saved - N° PQR:" + q.uuid, })
+                                                   'message': "PQR successfully saved - N° PQR: " + q.uuid, })
 
 
 def addAnswer(request, pqr_id):

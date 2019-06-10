@@ -1,23 +1,26 @@
-li a {
+/* li a {
   color: green;
-}
+} */
 
 body {
-  padding-top: 50px;
-  background: gainsboro url("images/pj.jpg") no-repeat center center fixed;
+  /* padding-top: 50px;
+  background: gainsboro url("images/pj.jpg") no-repeat center center fixed; */
   color: #000;
   font-family: "Open Sans", sans-serif;
-  background: cover;
-  text-align: center;
-  -webkit-background-size: cover;
+  /*background: cover;
+  text-align: center; 
+
+  -webkit-background-size: cover;*/
 }
 
 body img {
   width: 100%;
 }
+
 .opacity {
   background-color: gainsboro;
-  opacity: 0.98; /* Opacidad 60% */
+  opacity: 0.98;
+  /* Opacidad 60% */
 }
 
 .height82 {

@@ -1,10 +1,25 @@
-{%include 'pqr/index.html'%}
+{%include 'pqr/header.html'%}
 
-<div class="container opacity ">
-
-  <div class="row ">
-    <div class="col-sm-12 height82">
+<div class="container">
+{% if error_message %}
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">{{ error_message }}</h4>
+          </div>
+        {% endif %} 
+        {% if message %}
+        <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">Ticket PQR has been created</h4>
+          <p>{{ message }}</p>
+        </div>
+         
+        {% endif %}
+  <div class="card border-dark">
+    <div class="card-header text-white bg-primary">
       <h3>Create new PQR</h3>
+    </div>
+    <div class="card-body bg-light">
+      <h5 class="card-title">Type your comment</h5>
+      <p class="card-text">We are going to answer your questions as soon as posible.</p>
       <form action="{% url 'add' %}" method="POST" class="col-sm-8">
         {% csrf_token %}
         <fieldset>
@@ -20,9 +35,16 @@
             <label for="comment">Comment:</label>
             <textarea class="form-control" rows="5" name="comment" id="comment" required></textarea>
           </div>
-          <input type="submit" value="add" class="btn btn-primary btn-md" style="width: 100px;" />
+          <input type="submit" value="add" class="btn btn-primary" style="width: 100px;" />
         </fieldset>
       </form>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-sm-12 height82">
+      
+      
     </div>
   </div>
 </div>
